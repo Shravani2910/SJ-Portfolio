@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shravani Jagtap — AI Engineer Portfolio</title>
+    <meta
+      name="description"
+      content="Personal portfolio of Shravani Jagtap, an AI Engineer building machine learning applications, RAG systems, and agentic AI workflows."
+    />
+    <meta property="og:title" content="Shravani Jagtap — AI Engineer Portfolio" />
+    <meta
+      property="og:description"
+      content="Personal portfolio of Shravani Jagtap, an AI Engineer building machine learning applications, RAG systems, and agentic AI workflows."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('shravani-theme');
+          var theme = saved
+            ? saved
+            : window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
+            ? 'light'
+            : 'dark';
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased selection:bg-[#245BFF]/30 selection:text-[#F5F5F7]">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
