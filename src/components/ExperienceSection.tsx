@@ -1,3 +1,4 @@
+
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { EDUCATION_DATA, EXPERIENCE_DATA } from '../data/portfolioData';
@@ -87,16 +88,41 @@ export default function ExperienceSection() {
             Education
           </h2>
 
-          <div className="mt-12 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/55 p-7 sm:p-8">
-            <p className="font-mono-tabular text-xs font-medium text-[var(--accent-secondary)] sm:text-sm">
-              {EDUCATION_DATA.period}
-            </p>
-            <h3 className="mt-2 font-display text-xl font-bold tracking-tight text-[var(--text-primary)] sm:text-2xl">
-              {EDUCATION_DATA.degree}
-            </h3>
-            <p className="mt-2 text-base font-medium text-[var(--text-secondary)]">
-              {EDUCATION_DATA.institution}
-            </p>
+          <div className="mt-12 space-y-5">
+            {EDUCATION_DATA.map((education, index) => (
+              <motion.div
+                key={education.degree}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{
+                  duration: 0.6,
+                  delay: index * 0.12,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)]/55 p-7 sm:p-8"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <p className="font-mono-tabular text-xs font-medium text-[var(--accent-secondary)] sm:text-sm">
+                    {education.period}
+                  </p>
+
+                  {education.status && (
+                    <span className="rounded-full border border-[var(--border-subtle)] px-3 py-1 text-xs text-[var(--text-secondary)]">
+                      {education.status}
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="mt-3 font-display text-xl font-bold tracking-tight text-[var(--text-primary)] sm:text-2xl">
+                  {education.degree}
+                </h3>
+
+                <p className="mt-2 text-base font-medium text-[var(--text-secondary)]">
+                  {education.institution}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>

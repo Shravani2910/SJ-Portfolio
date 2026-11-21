@@ -158,11 +158,19 @@ export const EXPERIENCE_DATA: ExperienceItem[] = [
   },
 ];
 
-export const EDUCATION_DATA = {
-  degree: 'B.E. in Artificial Intelligence and Data Science',
-  institution: 'University of Pune',
-  period: '2022 – 2025',
-};
+export const EDUCATION_DATA = [
+  {
+    degree: 'Bachelor of Engineering in Artificial Intelligence',
+    institution: 'University of Pune',
+    period: '2022 – 2025',
+  },
+  {
+    degree: 'Business Management (Strategic)',
+    institution: 'Symbiosis Skills & Professional University',
+    period: '2026 – 2027',
+    status: 'Pursuing',
+  },
+];
 
 export const CONTACT_DATA = {
   heading: "Have an idea? Let's build something intelligent.",
