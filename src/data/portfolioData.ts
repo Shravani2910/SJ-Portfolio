@@ -29,9 +29,9 @@ export interface ExperienceItem {
   company: string;
   period: string;
 }
-
+import portraitPopArt from '../assets/images/shravani-portfolio.jpeg';
 export const PORTFOLIO_ASSETS = {
-  portraitPopArt: '/src/assets/images/shravani-portfolio.jpeg',
+  portraitPopArt,
   projectLens: '/src/assets/images/project_lens_agent_1795157210915.jpg',
   projectBrainee: '/src/assets/images/project_dr_brainee_1795157210114.jpg',
   projectCheffie: '/src/assets/images/project_cheffie_voice_1795157210048.jpg',
