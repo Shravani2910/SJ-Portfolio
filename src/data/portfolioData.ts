@@ -31,7 +31,7 @@ export interface ExperienceItem {
 }
 
 export const PORTFOLIO_ASSETS = {
-  portraitPopArt: '/src/assets/images/shravani_portrait_popart_1795157210782.jpg',
+  portraitPopArt: '/src/assets/images/shravani-portfolio.jpeg',
   projectLens: '/src/assets/images/project_lens_agent_1795157210915.jpg',
   projectBrainee: '/src/assets/images/project_dr_brainee_1795157210114.jpg',
   projectCheffie: '/src/assets/images/project_cheffie_voice_1795157210048.jpg',
