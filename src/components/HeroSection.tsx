@@ -1,5 +1,6 @@
+
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, MapPin, Palette } from 'lucide-react';
 import { HERO_DATA, PORTFOLIO_ASSETS } from '../data/portfolioData';
 
@@ -35,11 +36,19 @@ function FourPointStar({ className }: { className?: string }) {
 
 export default function HeroSection() {
   const [imgError, setImgError] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const portraitFloat = shouldReduceMotion
+    ? {}
+    : {
+        y: [0, -12, 0, -7, 0],
+        rotate: [0, 1, 0, -1, 0],
+      };
 
   return (
     <section
@@ -47,10 +56,11 @@ export default function HeroSection() {
       className="relative z-10 mx-auto max-w-6xl px-6 pt-28 pb-20 sm:pt-36 sm:pb-28 lg:px-10 lg:pt-40 lg:pb-32"
     >
       <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-10">
+
         {/* Left Column: Editorial Introduction */}
         <div className="lg:col-span-6 lg:pr-4">
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
             className="mb-5 flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)]"
@@ -60,7 +70,7 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-4xl font-extrabold tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-6xl leading-[1.06] [text-wrap:balance]"
@@ -69,7 +79,7 @@ export default function HeroSection() {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.16, ease: [0.16, 1, 0.3, 1] }}
             className="mt-3 font-display text-2xl font-bold tracking-tight text-[var(--accent-primary)] sm:text-3xl lg:text-4xl"
@@ -78,7 +88,7 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.p
-            initial={{ opacity: 0, y: 18 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.65, delay: 0.24, ease: [0.16, 1, 0.3, 1] }}
             className="mt-6 max-w-xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg"
@@ -87,7 +97,7 @@ export default function HeroSection() {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.32, ease: [0.16, 1, 0.3, 1] }}
             className="mt-9 flex flex-wrap items-center gap-4"
@@ -111,41 +121,60 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right Column: Pop-Art Portrait Centerpiece + Floating Decorative Elements */}
+        {/* Right Column: Animated Portrait */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
+          initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.75, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="relative mx-auto w-full max-w-[440px] lg:col-span-6 lg:max-w-[500px]"
         >
           <div className="relative px-7 py-8 sm:px-10 sm:py-10">
-            {/* Subtle cobalt radial aura behind portrait */}
+
+            {/* Blue Glow Behind Portrait */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-10 rounded-full bg-[#245BFF]/18 blur-3xl dark:bg-[#245BFF]/22"
             />
 
-            {/* Main Pop-Art Cutout Portrait Frame */}
-            <div className="relative z-10 overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[#0D0D14] shadow-2xl shadow-[#245BFF]/10">
-              {!imgError ? (
-                <img
-                  src={PORTFOLIO_ASSETS.portraitPopArt}
-                  alt="Pop-art cobalt blue halftone cutout illustration of Shravani Jagtap"
-                  referrerPolicy="no-referrer"
-                  onError={() => setImgError(true)}
-                  className="aspect-[3/4] w-full object-cover object-top transition-transform duration-500 ease-out hover:scale-[1.02]"
-                />
-              ) : (
-                <div className="flex aspect-[3/4] w-full flex-col items-center justify-center bg-[#171923] p-8 text-center">
-                  <span className="font-display text-2xl font-bold text-[#F5F5F7]">
-                    Shravani Jagtap
-                  </span>
-                  <span className="mt-2 text-sm text-[#A1A1B0]">AI Engineer</span>
-                </div>
-              )}
-            </div>
+            {/* Floating Portrait Frame */}
+            <motion.div
+              animate={portraitFloat}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : {
+                      duration: 7,
+                      repeat: Infinity,
+                      repeatType: 'loop',
+                      ease: 'easeInOut',
+                    }
+              }
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.025 }}
+              className="relative z-10 rounded-2xl border border-[var(--border-subtle)] bg-[#0D0D14] shadow-2xl shadow-[#245BFF]/15"
+            >
+              <div className="overflow-hidden rounded-2xl">
+                {!imgError ? (
+                  <img
+                    src={PORTFOLIO_ASSETS.portraitPopArt}
+                    alt="Portrait of Shravani Jagtap"
+                    referrerPolicy="no-referrer"
+                    onError={() => setImgError(true)}
+                    className="aspect-[3/4] w-full object-cover object-top transition-transform duration-700 ease-out hover:scale-[1.04]"
+                  />
+                ) : (
+                  <div className="flex aspect-[3/4] w-full flex-col items-center justify-center bg-[#171923] p-8 text-center">
+                    <span className="font-display text-2xl font-bold text-[#F5F5F7]">
+                      Shravani Jagtap
+                    </span>
+                    <span className="mt-2 text-sm text-[#A1A1B0]">
+                      AI Engineer
+                    </span>
+                  </div>
+                )}
+              </div>
+            </motion.div>
 
-            {/* Decorative Label 1: "AI Engineer" (Top-Left) */}
+            {/* AI Engineer Label */}
             <div
               className="animate-float-slow absolute top-1 left-0 z-20 -rotate-6 select-none"
               style={{ animationDelay: '0s' }}
@@ -153,7 +182,6 @@ export default function HeroSection() {
               <span className="font-display text-sm font-bold tracking-tight text-[var(--accent-primary)] sm:text-base">
                 AI Engineer
               </span>
-              {/* Hand-drawn curved arrow pointing toward portrait */}
               <svg
                 viewBox="0 0 64 36"
                 className="mt-0.5 ml-4 h-7 w-12 text-[var(--accent-primary)]"
@@ -170,7 +198,7 @@ export default function HeroSection() {
               </svg>
             </div>
 
-            {/* Decorative Icon 1: Claude AI Icon (Top-Right) */}
+            {/* Claude AI Icon */}
             <div
               className="animate-float-medium absolute top-3 right-1 z-20 flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)] shadow-lg transition-transform duration-200 hover:scale-110"
               style={{ animationDelay: '0.6s' }}
@@ -180,7 +208,7 @@ export default function HeroSection() {
               <ClaudeIcon />
             </div>
 
-            {/* Decorative Label 2: "Sci-fi" (Right-Middle) */}
+            {/* Sci-fi Label */}
             <div
               className="animate-float-slow absolute top-[34%] -right-2 z-20 rotate-6 select-none sm:-right-4"
               style={{ animationDelay: '1.2s' }}
@@ -190,7 +218,7 @@ export default function HeroSection() {
               </span>
             </div>
 
-            {/* Decorative Icon 2: VS Code Icon (Bottom-Left) */}
+            {/* VS Code Icon */}
             <div
               className="animate-float-medium absolute bottom-20 left-0 z-20 flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)] shadow-lg transition-transform duration-200 hover:scale-110"
               style={{ animationDelay: '1.4s' }}
@@ -200,7 +228,7 @@ export default function HeroSection() {
               <VsCodeIcon />
             </div>
 
-            {/* Decorative Label 3: "Art" (Left-Middle) */}
+            {/* Art Label */}
             <div
               className="animate-float-slow absolute top-[44%] -left-1 z-20 -rotate-12 select-none sm:-left-3"
               style={{ animationDelay: '0.9s' }}
@@ -210,7 +238,7 @@ export default function HeroSection() {
               </span>
             </div>
 
-            {/* Decorative Icon 3: Creative Art / Palette Icon (Bottom-Right) */}
+            {/* Creative Art Icon */}
             <div
               className="animate-float-slow absolute right-2 bottom-10 z-20 flex h-12 w-12 items-center justify-center rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-secondary)] text-[var(--accent-secondary)] shadow-lg transition-transform duration-200 hover:scale-110"
               style={{ animationDelay: '2.1s' }}
@@ -220,7 +248,7 @@ export default function HeroSection() {
               <Palette className="h-5 w-5" />
             </div>
 
-            {/* Decorative Label 4: "Design" (Bottom-Center-Left) */}
+            {/* Design Label */}
             <div
               className="animate-float-medium absolute bottom-1 left-12 z-20 rotate-3 select-none"
               style={{ animationDelay: '1.8s' }}
@@ -246,11 +274,11 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Rotating Stars & Outlined Geometric Shapes */}
+            {/* Decorative Stars */}
             <FourPointStar className="animate-spin-slow absolute top-16 right-12 z-20 h-4 w-4 text-[var(--accent-primary)]" />
             <FourPointStar className="animate-spin-slow absolute bottom-28 right-0 z-20 h-3.5 w-3.5 text-[var(--accent-secondary)]" />
 
-            {/* Outlined geometric triangle */}
+            {/* Outlined Triangle */}
             <svg
               viewBox="0 0 24 24"
               className="animate-float-slow absolute top-[24%] left-2 z-20 h-5 w-5 text-[#E08A4B]"
@@ -265,7 +293,7 @@ export default function HeroSection() {
               />
             </svg>
 
-            {/* Outlined geometric circle */}
+            {/* Outlined Circle */}
             <svg
               viewBox="0 0 20 20"
               className="animate-float-medium absolute right-14 bottom-2 z-20 h-4 w-4 text-[var(--accent-primary)]"
